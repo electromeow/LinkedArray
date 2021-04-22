@@ -142,6 +142,101 @@ class LinkedArray {
   toString(): string {
     return "LinkedArray { " + this.toArray() + " }";
   }
+
+  static isLinkedArray(obj: any): boolean {
+    return obj instanceof LinkedArray;
+  }
+
+  fill(val: any, start = 0, end: number = this.length): LinkedArray {
+    let iterNode: node | undefined;
+    iterNode = this.root;
+    for (let i = 0; i < start; i++) {
+      if (iterNode.next !== undefined) iterNode = iterNode.next;
+      else throw new Error(`This LinkedArray has less than ${end + 1} nodes.`);
+    }
+    for (let i = start; i < end; i++) {
+      iterNode.val = val;
+      if (iterNode.next !== undefined) iterNode = iterNode.next;
+      else throw new Error(`This LinkedArray has less than ${end + 1} nodes.`);
+    }
+    return this;
+  }
+
+  reverse(): LinkedArray {
+    const arr = this.toArray();
+    arr.reverse();
+    this.root = new node(undefined);
+    arr.forEach((x) => {
+      this.push(x);
+    });
+    return this;
+  }
+
+  includes(obj: any): boolean {
+    let iterNode: node | undefined;
+    iterNode = this.root;
+    while (iterNode.next !== undefined) {
+      if (iterNode.val === obj) return true;
+      iterNode = iterNode.next;
+    }
+    return false;
+  }
+
+  join(seperator = ","): string {
+    let iterNode: node | undefined;
+    iterNode = this.root;
+    let joinedString = "";
+    joinedString += this.root.val;
+    iterNode = iterNode.next;
+    while (iterNode !== undefined) {
+      joinedString += seperator;
+      joinedString += iterNode.val;
+      iterNode = iterNode.next;
+    }
+    return joinedString;
+  }
+
+  indexOf(obj: any, fromIndex = 0) {
+    let iterNode: node | undefined;
+    iterNode = this.root;
+    let counter = 0;
+    for (let i = 0; i < fromIndex; i++) {
+      if (iterNode.next !== undefined) iterNode = iterNode.next;
+      else
+        throw new Error(
+          `This LinkedArray has less than ${fromIndex + 1} nodes.`
+        );
+      counter++;
+    }
+    while (iterNode !== undefined) {
+      if (iterNode.val === obj) return counter;
+      counter++;
+      iterNode = iterNode.next;
+    }
+    return -1;
+  }
+
+  lastIndexOf(obj: any, fromIndex = 0) {
+    let iterNode: node | undefined;
+    iterNode = this.root;
+    let counter = 0;
+    for (let i = 0; i < fromIndex; i++) {
+      if (iterNode.next !== undefined) iterNode = iterNode.next;
+      else
+        throw new Error(
+          `This LinkedArray has less than ${fromIndex + 1} nodes.`
+        );
+      counter++;
+    }
+    const matches: any[] = [];
+    while (iterNode !== undefined) {
+      if (iterNode.val === obj) matches.push(counter);
+      counter++;
+      iterNode = iterNode.next;
+    }
+    if (matches.length > 1) return matches[matches.length - 1];
+    else return -1;
+  }
 }
 
 export { LinkedArray };
