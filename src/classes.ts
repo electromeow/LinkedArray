@@ -1,16 +1,16 @@
 class node {
   val: any;
   next: node | undefined;
-  constructor(val: any, next: node | undefined = undefined) {
+
+  constructor(val: any = undefined, next: node | undefined = undefined) {
     this.val = val;
     this.next = next;
   }
 }
-
 class LinkedArray {
   private root: node;
 
-  get length() {
+  get length(): number {
     let iterNode: node;
     iterNode = this.root;
     let counter = 1;
@@ -118,7 +118,7 @@ class LinkedArray {
     return out;
   }
 
-  slice(start = 0, end: number): LinkedArray {
+  slice(start = 0, end: number = this.length): LinkedArray {
     let iterNode: node | undefined;
     iterNode = undefined; // this line is written to deal with eslint "prefer-const" error. don't mind
     iterNode = this.root;
@@ -152,12 +152,13 @@ class LinkedArray {
     iterNode = this.root;
     for (let i = 0; i < start; i++) {
       if (iterNode.next !== undefined) iterNode = iterNode.next;
-      else throw new Error(`This LinkedArray has less than ${end + 1} nodes.`);
+      else throw new Error(`This LinkedArray has less than ${end} nodes.`);
     }
     for (let i = start; i < end; i++) {
-      iterNode.val = val;
-      if (iterNode.next !== undefined) iterNode = iterNode.next;
-      else throw new Error(`This LinkedArray has less than ${end + 1} nodes.`);
+      if (iterNode !== undefined) {
+        iterNode.val = val;
+        iterNode = iterNode.next;
+      } else throw new Error(`This LinkedArray has less than ${end} nodes.`);
     }
     return this;
   }
@@ -175,7 +176,7 @@ class LinkedArray {
   includes(obj: any): boolean {
     let iterNode: node | undefined;
     iterNode = this.root;
-    while (iterNode.next !== undefined) {
+    while (iterNode !== undefined) {
       if (iterNode.val === obj) return true;
       iterNode = iterNode.next;
     }
@@ -236,6 +237,132 @@ class LinkedArray {
     }
     if (matches.length > 1) return matches[matches.length - 1];
     else return -1;
+  }
+
+  splice(start: number, deleteCount: number): LinkedArray {
+    const array = this.toArray();
+    const splicedElements: any[] = array.splice(
+      start,
+      deleteCount,
+      ...Array.from(arguments).slice(2)
+    );
+    this.root = LinkedArray.from(array).root;
+    return LinkedArray.from(splicedElements);
+  }
+
+  static from(array: any[]): LinkedArray {
+    const output = new LinkedArray();
+    array.forEach((x) => {
+      output.push(x);
+    });
+    return output;
+  }
+
+  map(
+    callbackfn: (currentValue: any, index: number, array: LinkedArray) => any
+  ): LinkedArray {
+    let iterNode: node | undefined;
+    iterNode = this.root;
+    const returnValues = [];
+    let i = 0;
+    while (iterNode !== undefined) {
+      returnValues.push(callbackfn(iterNode.val, i, this));
+      iterNode = iterNode.next;
+      i++;
+    }
+    return LinkedArray.from(returnValues);
+  }
+
+  forEach(
+    callbackfn: (currentValue: any, index: number, array: LinkedArray) => void
+  ): void {
+    let iterNode: node | undefined;
+    iterNode = this.root;
+    let i = 0;
+    while (iterNode !== undefined) {
+      callbackfn(iterNode.val, i, this);
+      i++;
+      iterNode = iterNode.next;
+    }
+  }
+
+  every(
+    callbackfn: (
+      currentValue: any,
+      index: number,
+      array: LinkedArray
+    ) => boolean
+  ): boolean {
+    let iterNode: node | undefined;
+    iterNode = this.root;
+    let i = 0;
+    let res;
+    while (iterNode !== undefined) {
+      res = callbackfn(iterNode.val, i, this);
+      if (!res) return false;
+      i++;
+      iterNode = iterNode.next;
+    }
+    return true;
+  }
+
+  some(
+    callbackfn: (
+      currentValue: any,
+      index: number,
+      array: LinkedArray
+    ) => boolean
+  ): boolean {
+    let iterNode: node | undefined;
+    iterNode = this.root;
+    let i = 0;
+    let res;
+    while (iterNode !== undefined) {
+      res = callbackfn(iterNode.val, i, this);
+      if (res) return true;
+      i++;
+      iterNode = iterNode.next;
+    }
+    return false;
+  }
+
+  filter(
+    callbackfn: (currentValue: any, index: number, array: LinkedArray) => any
+  ): LinkedArray {
+    let iterNode: node | undefined;
+    iterNode = this.root;
+    const returnValues = [];
+    let i = 0;
+    while (iterNode !== undefined) {
+      if (callbackfn(iterNode.val, i, this)) returnValues.push(iterNode.val);
+      iterNode = iterNode.next;
+      i++;
+    }
+    return LinkedArray.from(returnValues);
+  }
+
+  reduce(
+    callbackfn: (
+      accumulator: any,
+      currentValue: any,
+      index: number,
+      array: LinkedArray
+    ) => any,
+    initialValue: any = this.root.val
+  ): any {
+    let iterNode: node | undefined;
+    iterNode = this.root;
+    let i = 0;
+    let acc;
+    acc = callbackfn(initialValue, iterNode.val, i, this);
+    iterNode = iterNode.next;
+    i++;
+    while (iterNode !== undefined) {
+      acc = callbackfn(acc, iterNode.val, i, this);
+      iterNode = iterNode.next;
+      i++;
+    }
+    return acc;
   }
 }
 
