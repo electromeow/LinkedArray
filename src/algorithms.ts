@@ -2,7 +2,7 @@ import { LinkedArray } from "./classes";
 
 function quick_sort(list: LinkedArray): LinkedArray {
   const len: number = list.length;
-  let pivot: number;
+  let pivot;
   if (len <= 1) {
     return list;
   } else {
@@ -12,8 +12,7 @@ function quick_sort(list: LinkedArray): LinkedArray {
   const smallers = new LinkedArray();
   for (let i = 0; i < list.length; i++) {
     const x = list.get(i);
-    if (typeof x !== "number")
-      throw new Error("Only numbers can be sorted using LinkedArray.");
+    if (typeof x !== "number") throw new Error("Only numbers can be sorted.");
     if (x > pivot) biggers.push(x);
     else smallers.push(x);
   }
@@ -61,6 +60,24 @@ function merge_sort(listinput: LinkedArray): LinkedArray {
   }
   return list;
 }
+/*
+function binary_search(list: LinkedArray, val: number, sort = false): number {
+  let value: number;
+  if (sort) {
+    list = quick_sort(list);
+  }
 
+  const len = list.length;
+  const mid = (len - (len % 2)) / 2;
+  const side1 = list.slice(0, mid);
+  const side2 = list.slice(mid, len);
+  if (side1.get(mid - 1) > val) {
+    return binary_search(side1, val);
+  } else if (side1.get(mid - 1) < val) {
+    return binary_search(side2, val);
+  } else return list.get(mid - 1);
+}
+*/
 exports.merge_sort = merge_sort;
 exports.quick_sort = quick_sort;
+//exports.binary_search = binary_search;
