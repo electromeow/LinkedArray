@@ -169,12 +169,27 @@ class LinkedArray {
   }
 
   reverse(): LinkedArray {
-    const arr = this.toArray();
-    arr.reverse();
-    this.root = new node(undefined);
-    arr.forEach((x) => {
-      this.push(x);
-    });
+    let iterNode: node | undefined;
+    iterNode = this.root;
+    let lengthCounter: number;
+    lengthCounter = 0;
+    while (iterNode !== undefined) {
+      this.unshift(iterNode.val);
+      iterNode = iterNode.next;
+      lengthCounter++;
+    }
+    let counter: number;
+    counter = 0;
+    iterNode = this.root;
+    while (counter + 1 < lengthCounter) {
+      counter++;
+      if (iterNode.next === undefined)
+        throw new Error(
+          'Unknown Error! This error was just added to bypass TypeScript Compiler\'s "Object is possibly undefined." error.'
+        );
+      iterNode = iterNode.next;
+    }
+    iterNode.next = undefined;
     return this;
   }
 
