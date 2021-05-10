@@ -1,7 +1,8 @@
 # LinkedArray
 
-Linked Lists simplified. It's in development now.\
-It will have a usage nearly same with arrays and will contain some sort and search algorithms like merge sort, binary search etc. The blank algorithms.ts file is for that. I will add some search&sort algorithms in it. When it is finished, a Python implementation will begin to been developing.
+Linked Lists simplified. Usage nearly same as arrays.\
+Using this library, you can use Linked Lists nearly same as arrays and quick sort, merge sort, linear search and binary search.
+It has a usage nearly same with arrays and contains some sort and search algorithms like merge sort, binary search etc.
 
 ## Made with Typescript
 

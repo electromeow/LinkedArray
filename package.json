@@ -1,6 +1,6 @@
 {
   "name": "linkedarray",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "LinkedLists Simplified. Usage nearly same as arrays. Including some algorithms.",
   "main": "lib/index.js",
   "author": "electromeow",
