@@ -41,13 +41,18 @@ class LinkedArray {
   pop(): any {
     let iterNode: node | undefined;
     iterNode = this.root;
-    if (this.root.next === undefined) {
-      throw new Error("A linkedlist must have at least one node.");
+    if (this.root.val === undefined) {
+      throw new Error("The LinkedArray to pop must have at least one node.");
     }
-    while (iterNode.next !== undefined) {
+    if (this.root.next === undefined) {
+      const lastNode = this.root.val;
+      this.root.val = undefined;
+      return lastNode;
+    }
+    while (iterNode.next?.next !== undefined) {
       iterNode = iterNode.next;
     }
-    const lastNode = iterNode.val;
+    const lastNode = iterNode.next?.val;
     iterNode.next = undefined;
     return lastNode;
   }
