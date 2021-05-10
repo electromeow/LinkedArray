@@ -114,6 +114,12 @@ function binary_search(
     ]);
 }
 
+function linear_search(list: LinkedArray, val: any): number {
+  if (!LinkedArray.isLinkedArray(list))
+    throw new Error("List given must be a LinkedArray Object");
+  return list.indexOf(val);
+}
+
 exports.merge_sort = merge_sort;
 exports.quick_sort = quick_sort;
 exports.binary_search = binary_search;
