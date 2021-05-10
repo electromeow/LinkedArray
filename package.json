@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm test.js",
+    "test": "node test.js",
     "lint": "eslint --fix .",
     "prettier": "eslint --write ."
   },
@@ -15,8 +15,6 @@
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "eslint": "^7.24.0",
-    "prettier": "^2.2.1",
     "typescript": "^4.2.4"
-  },
-  "dependencies": {}
+  }
 }
