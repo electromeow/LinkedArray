@@ -1,15 +1,19 @@
 import { LinkedArray } from "./classes";
 
-function quick_sort(unsorted_list: LinkedArray): any {
+function quick_sort(unsorted_list: LinkedArray): LinkedArray {
   var list = new LinkedArray();
   list = Object.assign(list, unsorted_list);
   const len: number = list.length;
-  let pivot: any;
+  let pivot: number;
+  let beforecheckpivot: unknown;
+  beforecheckpivot = undefined; // this line added to bypass eslint prefer-const error
   if (len <= 1) {
     return list;
-  } else {
-    pivot = list.pop();
   }
+  beforecheckpivot = list.pop();
+  if (typeof beforecheckpivot !== "number")
+    throw new Error("Only number can be sorted");
+  else pivot = beforecheckpivot * 1;
   const biggers = new LinkedArray();
   const smallers = new LinkedArray();
   list.forEach((x) => {
@@ -40,21 +44,28 @@ function quick_sort(unsorted_list: LinkedArray): any {
 
 function merge_sort(listinput: LinkedArray): LinkedArray {
   const list = new LinkedArray();
-  listinput.toArray().forEach((element) => {
+  listinput.forEach((element) => {
+    if (typeof element !== "number") {
+      throw new Error("Only numbers can be sorted.");
+    }
     list.push(element);
   }); //copied the LinkedArray
   if (list.length < 2) return list;
   let mid = list.length;
   mid = (mid - (mid % 2)) / 2;
-  let side1 = list.slice(0, mid);
-  let side2 = list.slice(mid, list.length);
+  let side1: LinkedArray = list.slice(0, mid);
+  let side2: LinkedArray = list.slice(mid, list.length);
   side1 = merge_sort(side1);
   side2 = merge_sort(side2);
   let i = 0;
   let j = 0;
   let k = 0;
+  function __return_if_number(inputVal: unknown): number {
+    if (typeof inputVal === "number") return inputVal;
+    else throw new Error("Only numbers can be sorted.");
+  }
   while (i < side1.length && j < side2.length) {
-    if (side1.get(i) < side2.get(j)) {
+    if (__return_if_number(side1.get(i)) < __return_if_number(side2.get(j))) {
       list.set(k, side1.get(i));
       i++;
     } else {
@@ -78,7 +89,7 @@ function merge_sort(listinput: LinkedArray): LinkedArray {
 
 function binary_search(
   list: LinkedArray,
-  val: any,
+  val: unknown,
   sort = false,
   indexRange: number[]
 ): number {
@@ -100,12 +111,17 @@ function binary_search(
   const mid = (len - (len % 2)) / 2;
   const side1 = list1.slice(0, mid);
   const side2 = list1.slice(mid, len);
-  if (val < side2.get(0))
+  function __return_if_number(inputVal: unknown): number {
+    if (typeof inputVal === "number") return inputVal;
+    else throw new Error("Only numbers can be sorted.");
+  }
+  const midpoint: number = __return_if_number(side2.get(0));
+  if (val < midpoint)
     return binary_search(side1, val, false, [
       indexRange[0],
       Math.floor((indexRange[1] - indexRange[0]) / 2) + indexRange[0],
     ]);
-  else if (val === side2.get(0))
+  else if (val === midpoint)
     return Math.floor((indexRange[1] - indexRange[0]) / 2) + indexRange[0];
   else
     return binary_search(side2, val, false, [
@@ -114,7 +130,7 @@ function binary_search(
     ]);
 }
 
-function linear_search(list: LinkedArray, val: any): number {
+function linear_search(list: LinkedArray, val: unknown): number {
   if (!LinkedArray.isLinkedArray(list))
     throw new Error("List given must be a LinkedArray Object");
   return list.indexOf(val);

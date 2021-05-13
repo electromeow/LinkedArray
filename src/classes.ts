@@ -1,8 +1,8 @@
 class node {
-  val: any;
+  val: unknown;
   next: node | undefined;
 
-  constructor(val: any = undefined, next: node | undefined = undefined) {
+  constructor(val: unknown = undefined, next: node | undefined = undefined) {
     this.val = val;
     this.next = next;
   }
@@ -21,11 +21,11 @@ class LinkedArray {
     return counter;
   }
 
-  constructor(rootVal: any = undefined) {
+  constructor(rootVal: unknown = undefined) {
     this.root = new node(rootVal);
   }
 
-  push(val: any): void {
+  push(val: unknown): void {
     let iterNode: node | undefined;
     iterNode = this.root;
     if (iterNode.val == undefined) {
@@ -38,7 +38,7 @@ class LinkedArray {
     iterNode.next = new node(val);
   }
 
-  pop(): any {
+  pop(): unknown {
     let iterNode: node | undefined;
     iterNode = this.root;
     if (this.root.val === undefined) {
@@ -57,10 +57,8 @@ class LinkedArray {
     return lastNode;
   }
 
-  toArray(): any[] {
-    let arr: any[];
-    arr = [0];
-    arr = []; // this made to deal with eslint "prefer-const" error
+  toArray(): unknown[] {
+    const arr: unknown[] = [];
     let iterNode: node | undefined;
     iterNode = this.root;
     while (iterNode !== undefined) {
@@ -70,7 +68,7 @@ class LinkedArray {
     return arr;
   }
 
-  shift(): any {
+  shift(): unknown {
     if (this.root.next === undefined)
       throw new Error("A linkedlist must have at least one node.");
     const lastNode = this.root.val;
@@ -78,12 +76,12 @@ class LinkedArray {
     return lastNode;
   }
 
-  unshift(val: any): number {
+  unshift(val: unknown): number {
     this.root = new node(val, this.root);
     return this.length;
   }
 
-  get(index: number): any {
+  get(index: number): unknown {
     let iterNode: node | undefined;
     iterNode = this.root;
     let counter = 0;
@@ -97,7 +95,7 @@ class LinkedArray {
     throw new Error(`This LinkedArray has less than ${index + 1} nodes.`);
   }
 
-  set(index: number, val: any): void {
+  set(index: number, val: unknown): void {
     let iterNode: node | undefined;
     iterNode = this.root;
     let counter = 0;
@@ -148,11 +146,11 @@ class LinkedArray {
     return "LinkedArray { " + this.toArray() + " }";
   }
 
-  static isLinkedArray(obj: any): boolean {
+  static isLinkedArray(obj: unknown): boolean {
     return obj instanceof LinkedArray;
   }
 
-  fill(val: any, start = 0, end: number = this.length): LinkedArray {
+  fill(val: unknown, start = 0, end: number = this.length): LinkedArray {
     let iterNode: node | undefined;
     iterNode = this.root;
     for (let i = 0; i < start; i++) {
@@ -193,7 +191,7 @@ class LinkedArray {
     return this;
   }
 
-  includes(obj: any): boolean {
+  includes(obj: unknown): boolean {
     let iterNode: node | undefined;
     iterNode = this.root;
     while (iterNode !== undefined) {
@@ -217,7 +215,7 @@ class LinkedArray {
     return joinedString;
   }
 
-  indexOf(obj: any, fromIndex = 0) {
+  indexOf(obj: unknown, fromIndex = 0) {
     let iterNode: node | undefined;
     iterNode = this.root;
     let counter = 0;
@@ -237,7 +235,7 @@ class LinkedArray {
     return -1;
   }
 
-  lastIndexOf(obj: any, fromIndex = 0) {
+  lastIndexOf(obj: unknown, fromIndex = 0) {
     let iterNode: node | undefined;
     iterNode = this.root;
     let counter = 0;
@@ -249,7 +247,7 @@ class LinkedArray {
         );
       counter++;
     }
-    const matches: any[] = [];
+    const matches: unknown[] = [];
     while (iterNode !== undefined) {
       if (iterNode.val === obj) matches.push(counter);
       counter++;
@@ -261,7 +259,7 @@ class LinkedArray {
 
   splice(start: number, deleteCount: number): LinkedArray {
     const array = this.toArray();
-    const splicedElements: any[] = array.splice(
+    const splicedElements: unknown[] = array.splice(
       start,
       deleteCount,
       ...Array.from(arguments).slice(2)
@@ -270,7 +268,7 @@ class LinkedArray {
     return LinkedArray.from(splicedElements);
   }
 
-  static from(array: any[]): LinkedArray {
+  static from(array: unknown[]): LinkedArray {
     const output = new LinkedArray();
     array.forEach((x) => {
       output.push(x);
@@ -279,7 +277,11 @@ class LinkedArray {
   }
 
   map(
-    callbackfn: (currentValue: any, index: number, array: LinkedArray) => any
+    callbackfn: (
+      currentValue: unknown,
+      index: number,
+      array: LinkedArray
+    ) => unknown
   ): LinkedArray {
     let iterNode: node | undefined;
     iterNode = this.root;
@@ -294,7 +296,11 @@ class LinkedArray {
   }
 
   forEach(
-    callbackfn: (currentValue: any, index: number, array: LinkedArray) => void
+    callbackfn: (
+      currentValue: unknown,
+      index: number,
+      array: LinkedArray
+    ) => void
   ): void {
     let iterNode: node | undefined;
     iterNode = this.root;
@@ -308,7 +314,7 @@ class LinkedArray {
 
   every(
     callbackfn: (
-      currentValue: any,
+      currentValue: unknown,
       index: number,
       array: LinkedArray
     ) => boolean
@@ -328,7 +334,7 @@ class LinkedArray {
 
   some(
     callbackfn: (
-      currentValue: any,
+      currentValue: unknown,
       index: number,
       array: LinkedArray
     ) => boolean
@@ -347,7 +353,11 @@ class LinkedArray {
   }
 
   filter(
-    callbackfn: (currentValue: any, index: number, array: LinkedArray) => any
+    callbackfn: (
+      currentValue: unknown,
+      index: number,
+      array: LinkedArray
+    ) => unknown
   ): LinkedArray {
     let iterNode: node | undefined;
     iterNode = this.root;
@@ -363,13 +373,13 @@ class LinkedArray {
 
   reduce(
     callbackfn: (
-      accumulator: any,
-      currentValue: any,
+      accumulator: unknown,
+      currentValue: unknown,
       index: number,
       array: LinkedArray
-    ) => any,
-    initialValue: any = this.root.val
-  ): any {
+    ) => unknown,
+    initialValue: unknown = this.root.val
+  ): unknown {
     let iterNode: node | undefined;
     iterNode = this.root;
     let i = 0;
