@@ -1,0 +1,31 @@
+declare class LinkedArray {
+    private root;
+    get length(): number;
+    constructor(rootVal?: unknown);
+    push(val: unknown): void;
+    pop(): unknown;
+    toArray(): unknown[];
+    shift(): unknown;
+    unshift(val: unknown): number;
+    get(index: number): unknown;
+    set(index: number, val: unknown): void;
+    concat(la: LinkedArray): LinkedArray;
+    slice(start?: number, end?: number): LinkedArray;
+    toString(): string;
+    static isLinkedArray(obj: unknown): boolean;
+    fill(val: unknown, start?: number, end?: number): LinkedArray;
+    reverse(): LinkedArray;
+    includes(obj: unknown): boolean;
+    join(seperator?: string): string;
+    indexOf(obj: unknown, fromIndex?: number): number;
+    lastIndexOf(obj: unknown, fromIndex?: number): unknown;
+    splice(start: number, deleteCount: number): LinkedArray;
+    static from(array: unknown[]): LinkedArray;
+    map(callbackfn: (currentValue: unknown, index: number, array: LinkedArray) => unknown): LinkedArray;
+    forEach(callbackfn: (currentValue: unknown, index: number, array: LinkedArray) => void): void;
+    every(callbackfn: (currentValue: unknown, index: number, array: LinkedArray) => boolean): boolean;
+    some(callbackfn: (currentValue: unknown, index: number, array: LinkedArray) => boolean): boolean;
+    filter(callbackfn: (currentValue: unknown, index: number, array: LinkedArray) => unknown): LinkedArray;
+    reduce(callbackfn: (accumulator: unknown, currentValue: unknown, index: number, array: LinkedArray) => unknown, initialValue?: unknown): unknown;
+}
+export { LinkedArray };
