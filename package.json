@@ -1,6 +1,6 @@
 {
   "name": "linkedarray",
-  "version": "1.0.1",
+  "version": "1.1.2",
   "description": "LinkedLists Simplified. Usage nearly same as arrays. Including some algorithms.",
   "main": "lib/index.js",
   "author": "electromeow",
@@ -16,5 +16,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/electromeow/LinkedArray.git"
-  }
+  },
+  "types": "./typings/classes.d.ts"
 }
