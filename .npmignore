@@ -1,6 +1,4 @@
 node_modules/
-src/
-tsconfig.json
 .prettierignore
 .prettierrc.json
 .eslintrc.json
