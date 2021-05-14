@@ -1,8 +1,15 @@
 import { LinkedArray } from "./classes";
 
-function quick_sort(unsorted_list: LinkedArray): LinkedArray {
+/**
+ * The quick sort algorithm.
+ * @param {LinkedArray} unsorted_list The unsorted LinkedArray to sort.
+ * @param {boolean} [in_place=false] If true, sorts the LinkedArray given in place. Else, creates a shallow copy to sort and doesn't change the actual LinkedArray.
+ * @returns {LinkedArray} The sorted output.
+ */
+function quick_sort(unsorted_list: LinkedArray, in_place = false): LinkedArray {
   var list = new LinkedArray();
-  list = Object.assign(list, unsorted_list);
+  if (!in_place) list = Object.assign(list, unsorted_list);
+  else list = unsorted_list;
   const len: number = list.length;
   let pivot: number;
   let beforecheckpivot: unknown;
@@ -42,14 +49,18 @@ function quick_sort(unsorted_list: LinkedArray): LinkedArray {
   }
 }
 
-function merge_sort(listinput: LinkedArray): LinkedArray {
-  const list = new LinkedArray();
-  listinput.forEach((element) => {
-    if (typeof element !== "number") {
-      throw new Error("Only numbers can be sorted.");
-    }
-    list.push(element);
-  }); //copied the LinkedArray
+/**
+ * The merge sort algorithm.
+ * @param {LinkedArray} unsorted_list The unsorted LinkedArray to sort.
+ * @param {boolean} [in_place=false] If true, sorts the LinkedArray given in place. Else, creates a shallow copy to sort and doesn't change the actual LinkedArray.
+ * @returns {LinkedArray} The sorted output.
+ */
+function merge_sort(unsorted_list: LinkedArray, in_place = false): LinkedArray {
+  let list: LinkedArray;
+  if (!in_place) {
+    list = new LinkedArray();
+    list = Object.assign(list, unsorted_list);
+  } else list = unsorted_list;
   if (list.length < 2) return list;
   let mid = list.length;
   mid = (mid - (mid % 2)) / 2;
@@ -87,9 +98,16 @@ function merge_sort(listinput: LinkedArray): LinkedArray {
   return list;
 }
 
+/**
+ * The binary search algorithm.
+ * @param {LinkedArray} list The LinkedArray to search in.
+ * @param {number} val The value to search in the LinkedArray.
+ * @param {boolean} [sort=false] If the given LinkedArray is unsorted, pass this as true to make it sort using quick sort.
+ * @returns {number} The index number if value is found, else -1.
+ */
 function binary_search(
   list: LinkedArray,
-  val: unknown,
+  val: number,
   sort = false,
   indexRange: number[]
 ): number {
@@ -130,6 +148,12 @@ function binary_search(
     ]);
 }
 
+/**
+ * The linear search algorithm.
+ * @param {LinkedArray} list The LinkedArray to search in.
+ * @param {*} val The value to search.
+ * @returns {number} The index number if value is found, else -1.
+ */
 function linear_search(list: LinkedArray, val: unknown): number {
   if (!LinkedArray.isLinkedArray(list))
     throw new Error("List given must be a LinkedArray Object");
@@ -139,3 +163,4 @@ function linear_search(list: LinkedArray, val: unknown): number {
 exports.merge_sort = merge_sort;
 exports.quick_sort = quick_sort;
 exports.binary_search = binary_search;
+exports.linear_search = linear_search;
