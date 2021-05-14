@@ -114,7 +114,7 @@ class LinkedArray {
    */
   unshift(val: unknown): number {
     this.root = new node(val, this.root);
-    return 0;
+    return this.length;
   }
 
   /**
