@@ -224,4 +224,4 @@ declare class LinkedArray {
      */
     at(index: number): unknown;
 }
-export { LinkedArray };
+export default LinkedArray;

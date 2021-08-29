@@ -268,7 +268,7 @@ class LinkedArray {
       counter++;
       if (iterNode.next === undefined)
         throw new Error(
-          'Unknown Error! This error was just added to bypass TypeScript Compiler\'s "Object is possibly undefined." error.'
+          "Unknown Error! This error was just added to bypass TypeScript Compiler's \"Object is possibly undefined.\" error."
         );
       iterNode = iterNode.next;
     }
@@ -607,4 +607,4 @@ class LinkedArray {
   }
 }
 
-export { LinkedArray };
+export default LinkedArray;

@@ -1,4 +1,4 @@
-import { LinkedArray } from "./classes";
+import LinkedArray from "./classes.js";
 
 /**
  * The quick sort algorithm.
@@ -6,7 +6,10 @@ import { LinkedArray } from "./classes";
  * @param {boolean} [in_place=false] If true, sorts the LinkedArray given in place. Else, creates a shallow copy to sort and doesn't change the actual LinkedArray.
  * @returns {LinkedArray} The sorted output.
  */
-function quick_sort(unsorted_list: LinkedArray, in_place = false): LinkedArray {
+export function quick_sort(
+  unsorted_list: LinkedArray,
+  in_place = false
+): LinkedArray {
   var list = new LinkedArray();
   if (!in_place) list = Object.assign(list, unsorted_list);
   else list = unsorted_list;
@@ -55,7 +58,10 @@ function quick_sort(unsorted_list: LinkedArray, in_place = false): LinkedArray {
  * @param {boolean} [in_place=false] If true, sorts the LinkedArray given in place. Else, creates a shallow copy to sort and doesn't change the actual LinkedArray.
  * @returns {LinkedArray} The sorted output.
  */
-function merge_sort(unsorted_list: LinkedArray, in_place = false): LinkedArray {
+export function merge_sort(
+  unsorted_list: LinkedArray,
+  in_place = false
+): LinkedArray {
   let list: LinkedArray;
   if (!in_place) {
     list = new LinkedArray();
@@ -105,7 +111,7 @@ function merge_sort(unsorted_list: LinkedArray, in_place = false): LinkedArray {
  * @param {boolean} [sort=false] If the given LinkedArray is unsorted, pass this as true to make it sort using quick sort.
  * @returns {number} The index number if value is found, else -1.
  */
-function binary_search(
+export function binary_search(
   list: LinkedArray,
   val: number,
   sort = false,
@@ -154,13 +160,8 @@ function binary_search(
  * @param {*} val The value to search.
  * @returns {number} The index number if value is found, else -1.
  */
-function linear_search(list: LinkedArray, val: unknown): number {
+export function linear_search(list: LinkedArray, val: unknown): number {
   if (!LinkedArray.isLinkedArray(list))
     throw new Error("List given must be a LinkedArray Object");
   return list.indexOf(val);
 }
-
-exports.merge_sort = merge_sort;
-exports.quick_sort = quick_sort;
-exports.binary_search = binary_search;
-exports.linear_search = linear_search;

@@ -1,5 +1,5 @@
-import { LinkedArray } from "./classes";
-import * as algos from "./algorithms";
+import LinkedArray from "./classes.js";
+import * as algorithms from "./algorithms.js";
 
-exports.algos = algos;
-exports.LinkedArray = LinkedArray;
+export default LinkedArray;
+export const algos = algorithms;
